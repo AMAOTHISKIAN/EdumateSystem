@@ -114,7 +114,7 @@ def Student_detail(request ,id):
 
 @login_required(login_url='login')
 def STAFF_Mettings(request):
-    meetings = Meetings.objects.filter(Meetings_Type =1)[::-1][:10]
+    meetings = Meetings.objects.filter(Meetings_Type = '1')[::-1][:10]
     data = {
         'meeting':meetings
     }

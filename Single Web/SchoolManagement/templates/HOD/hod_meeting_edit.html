@@ -8,7 +8,7 @@
                         <div class="col">
                             <h3 class="page-title">Add Event</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="event.html">Events</a></li>
+                                <li class="breadcrumb-item"><a href="">Events</a></li>
                                 <li class="breadcrumb-item active">Add Event</li>
                             </ul>
                         </div>
@@ -19,7 +19,7 @@
                     <div class="col-sm-12">
                         <div class="card">
                             <div class="card-body">
-                                <form method="post" action="http://127.0.0.1:8000/login/hod/meetings/update/">
+                                <form method="post" action="{% url 'meetings_update' %}">
                                     {% csrf_token %}
                                     <div class="row">
                                         <div class="col-12">
@@ -30,8 +30,9 @@
                                          <label>Meetings Type</label>
                                           <select class="form-control" name="meeting_type">
                                           <option>Select Type</option>
-                                          <option value="Parenst Meetting">Parenst Meetting</option>
-                                          <option value="Only Staff Meetting">Only Staff Meetting</option>
+                                          <option value="3">Parenst Meetting</option>
+                                          
+                                          <option value="1"> employe Meetting</option>
                                           
                                           </select>
                                         </div>

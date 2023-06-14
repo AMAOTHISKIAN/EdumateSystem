@@ -33,13 +33,13 @@
                                     </thead>
                                     <tbody>
                                         {% for i in meeting %}
-                                            {% if i.Meeting_Type == 1  %}
+                                            
                                                 <tr>
                                                     <td>{{ i.Meeting_Name }}</td>
                                                     <td>{{ i.Meeting_Date }}</td>
                                                     <td>{{ i.Meeting_Type }}</td>
                                                 </tr>
-                                            {% endif %}
+                                           
                                         {% endfor %}
                                     </tbody>
                                 </table>

@@ -166,7 +166,7 @@ def Guest_Views_Attendance(request):
 
 @login_required(login_url='login')
 def Guest_Mettings(request):
-    meetings = Meetings.objects.filter(Meetings_Type = 3)[::-1] [:10]
+    meetings = Meetings.objects.filter(Meetings_Type = '3')[::-1] [:10]
     data = {
         'meeting':meetings
     }

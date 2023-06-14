@@ -43,8 +43,6 @@ from django.utils.timezone import make_naive
 from openpyxl.utils.datetime import to_excel
 import numpy as np
 # ...
-
-
 def convert_to_naive_datetime(dt):
     """
     Convert the given datetime to a naive datetime object.
@@ -124,7 +122,8 @@ def backup_data(request):
 @login_required(login_url='login')
 def HOD_HOME(request):
    
- 
+    # Pylint(E1101:no-member)
+    #Pylint(E1101:no-member)
     student_count = student.objects.all().count()
     staff_count = Teacher.objects.all().count()
     student_gender_male = student.objects.filter(student_gender='Male').count()
@@ -149,9 +148,10 @@ def HOD_HOME(request):
 
 @login_required(login_url='login')
 def Meeting(request):
+    # Pylint(E1101:no-member)
     meeting = Meetings.objects.all()
     data = {
-        'meeting':meeting
+        'meeting': meeting
     }
     return render (request,'HOD/HOD_meetings.html',data)
 

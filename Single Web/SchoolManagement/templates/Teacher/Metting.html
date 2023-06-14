@@ -9,7 +9,7 @@
                 <div class="col">
                     <h3 class="page-title">Meetings</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="">Dashboard</a></li>
                         <li class="breadcrumb-item active">Meeting</li>
                     </ul>
                 </div>
@@ -33,13 +33,13 @@
                                     </thead>
                                     <tbody>
                                         {% for i in meeting %}
-                                            {% if i.Meeting_Type == 1 or i.Meeting_Type == 3 %}
+                                           
                                                 <tr>
                                                     <td>{{ i.Meeting_Name }}</td>
                                                     <td>{{ i.Meeting_Date }}</td>
                                                     <td>{{ i.Meeting_Type }}</td>
                                                 </tr>
-                                            {% endif %}
+                                            
                                         {% endfor %}
                                     </tbody>
                                 </table>
