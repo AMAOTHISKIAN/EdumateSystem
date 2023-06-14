@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
-from celery.schedules import crontab
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +25,7 @@ SECRET_KEY = 'django-insecure-rfjf!1$6+7*_np)pgg3p46sbmah45!r56y^0v-&*by%u3y1($j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['quick-panther-68.telebit.io','127.0.0.1' ]
+ALLOWED_HOSTS = ['*','quick-panther-68.telebit.io','127.0.0.1' ]
 
 
 # Application definition
