@@ -10,6 +10,8 @@ from django.db.models import Max , F
 from collections import defaultdict
 from datetime import datetime
 
+#Pylint(E1101:no-member)
+
 @login_required(login_url='login')
 def Index(request):
     student_obj = student.objects.get(admin=request.user.id)
