@@ -2330,7 +2330,7 @@ def HOD_News_add(request):
 # end news out 
 @login_required(login_url='login')   
 def contact_views(request):
-    contacts = Contact.objects.all()
+    contacts = Contact.objects.all()[::-1][:25]
     current_year = datetime.datetime.now().year
     context = {
         'contacts': contacts,
