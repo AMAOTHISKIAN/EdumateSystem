@@ -231,7 +231,7 @@ def blog_add(request):
 
         # redirect to the detail view for the new blog post
         return redirect('blog_detail', slugs=new_post.slug)
-
+    
     # if the request method is GET, render the blog post template with the categories and tags
     categories = Category.objects.all()
     tags = Tag.objects.all()
@@ -241,29 +241,26 @@ def blog_add(request):
 
 @login_required(login_url='login')
 def fees(request):
-    student = Student.objects.get(admin=request.user)
-    unpaid_fees = Fees.objects.filter(student=student, payed=False).order_by('student')
+    Student = student.objects.get(admin=request.user)
+    unpaid_fees = Fees.objects.filter(student=Student, payed=False).order_by('student')
 
-    paid_fees = Fees.objects.filter(student=student, payed=True).order_by('student')
+    paid_fees = Fees.objects.filter(student=Student, payed=True).order_by('student')
 
     data = {'students': []}
-    student_fees = paid_fees.filter(student=student)
+    student_fees = paid_fees.filter(student=Student)
     # Get the number of monthly fees paid
     monthly_fees = student_fees.filter(fee_type='Monthly Fee').count()
 
     # Get the number of annual fees paid
     annual_fees = student_fees.filter(fee_type='Annual Fee').count()
 
-    # Get the number of exam fees paid
-    exam_fees = student_fees.filter(fee_type='Exam Fee').count()
-
     # Calculate the total fees paid
-    total_fees = (monthly_fees * student.student_class.Monthly_Fee) + (annual_fees * student.student_class.Annual_Fee) + (exam_fees * student.student_class.Exams_Fee)
+    total_fees = (monthly_fees * Student.student_class.Monthly_Fee) + (annual_fees * Student.student_class.Annual_Fee)
 
     if student_fees.count() >= 1:
         data['students'].append({
-            'id': student.id,
-            'name': student.admin.username,
+            'id': Student.id,
+            'name': Student.admin.username,
             'fees': [{'id': fee.id, 'amount': fee.amount, 'transaction_id': fee.transaction_id} for fee in student_fees],
             'total_amount': total_fees
         })
@@ -273,8 +270,6 @@ def fees(request):
         'paid_fees': data['students']
     }
     return render(request, 'Guest/view_fees.html', context)
-
-
 
 @login_required(login_url='login')
 def view_result(request):
