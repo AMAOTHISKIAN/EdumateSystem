@@ -3,6 +3,9 @@ from django.contrib.auth import authenticate , login as auth_log
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser
+from django.contrib.auth.hashers import check_password, make_password
+from django.contrib.auth import update_session_auth_hash
+
 # Create your views here.
 def login(request):
     if request.method == 'POST':
@@ -37,10 +40,6 @@ def login(request):
 def HOD_HOME(request):
     return render (request,'HOD/home.html')
         
-@login_required(login_url='login/profile')
-def profile(request):
-    return render(request,'profile.html')   
-
 
 @login_required(login_url='login') 
 def editprofile(request):
@@ -56,6 +55,8 @@ def editprofile(request):
             try:
                 customuser = CustomUser.objects.get(id = request.user.id)
                 customuser.first_name = first_name
+                customuser.username = username
+                customuser.email = email
                 customuser.last_name = last_name
                 customuser.bio = bio
                
@@ -75,26 +76,25 @@ def editprofile(request):
         return render(request,'BACKEND/editprofile.html',data)   
 
 @login_required(login_url='login')    
-
 def profile(request):
     user = CustomUser.objects.get(id = request.user.id)
-    oldpassword = user.password
+    
     # print(oldpassword)
     
     if request.method == "POST":
         oldpass= request.POST.get('oldpass')
         newpass= request.POST.get('newpass')
         confirmpass= request.POST.get('confirmpass')
-        # try:
-        #     # if oldpassword != oldpass or newpass != confirmpass:
-        #     #     messages.error(request,'Your  password is not currect')
-        #     #     return redirect('profile')
-        #     # else:
-        #         user.set_password(confirmpass)    
-        #         user.save()
+        if check_password(oldpass, user.password):
+            # Check if the new password and confirm password match
+             if newpass == confirmpass:
+                # Update the user's password
+                user.password = make_password(newpass)
+                user.save()
 
-        # except:
-        #     messages.error(request,'Something Wrong') 
+                # Update the session authentication hash to prevent logout
+                update_session_auth_hash(request, user)
+
            
     data = {
         'user':user,
