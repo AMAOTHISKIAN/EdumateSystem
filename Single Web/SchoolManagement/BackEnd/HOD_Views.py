@@ -680,22 +680,9 @@ def  HOD_HOME_fornt_update(request):
 
 @login_required(login_url='login')
 def  hod_notification(request):
-      guest_notification = Guest_Notification.objects.filter(status = 0) [:10]  
-      notification = Staff_notifica.objects.filter(status = 0) [:10] 
-      teacher_notification = Teacher_notification.objects.filter(status = 0) [:10] 
-
-      
-      
-
-      data = {
-         'notification':notification,
-         'guest_notification':guest_notification,
-         'teacher_notification':teacher_notification
-      }
-
       
      
-      return render(request,'HOD/Hod_notification.html',data )
+      return render(request,'HOD/Hod_notification.html')
 
 
 @login_required(login_url='login')      
