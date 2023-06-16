@@ -4,7 +4,33 @@
       <div class="nav-module logo-module left">
          <div class='module module-logo' data-mw-title="Logo" id="logo" template="default" data-alt-logo="true" data-type="logo" parent-module="logo" parent-module-id="logo">
             <a href="">
-               
+               <script>
+                  mw.lib.require('fitty');
+                  
+                  mw.$(document).ready(function () {
+                      //fitty(document.getElementById('fitty-logo-1'));
+                      //fitty(document.getElementById('fitty-logo-2'));
+                  });
+               </script>
+               <script>
+                  document.addEventListener('DOMContentLoaded', () => {
+                     // Get the current URL
+                     const currentUrl = window.location.href;
+                     console.log("Current URL:", currentUrl);
+                   
+                     // Get all the menu links
+                     const menuLinks = document.querySelectorAll('.menu_element_link');
+                   
+                     // Loop through the links and check if the URL matches
+                     menuLinks.forEach(link => {
+                       console.log("Link URL:", link.href);
+                       if (link.href === currentUrl) {
+                         // Add the "active" class to the link
+                         link.classList.add('active');
+                       }
+                     });
+                   });
+               </script>
                <style>
                   #module-menu {
                      display: flex;
