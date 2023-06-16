@@ -77,17 +77,21 @@ def editprofile(request):
 
 @login_required(login_url='login')    
 def profile(request):
-    user = CustomUser.objects.get(id = request.user.id)
-    
-    # print(oldpassword)
-    
+    user = CustomUser.objects.get(id=request.user.id)
+
+    # Check if the request method is POST
     if request.method == "POST":
-        oldpass= request.POST.get('oldpass')
-        newpass= request.POST.get('newpass')
-        confirmpass= request.POST.get('confirmpass')
+        # Get the old password from the POST request
+        oldpass = request.POST.get("oldpass")
+        # Get the new password from the POST request
+        newpass = request.POST.get("newpass")
+        # Get the confirm password from the POST request
+        confirmpass = request.POST.get("confirmpass")
+
+        # Check if the old password is correct
         if check_password(oldpass, user.password):
             # Check if the new password and confirm password match
-             if newpass == confirmpass:
+            if newpass == confirmpass:
                 # Update the user's password
                 user.password = make_password(newpass)
                 user.save()
@@ -95,14 +99,11 @@ def profile(request):
                 # Update the session authentication hash to prevent logout
                 update_session_auth_hash(request, user)
 
-           
     data = {
-        'user':user,
-        
+        "user": user,
     }
 
-        # print(profile_pic , first_name , last_name , email , username)
-    return render(request,'BACKEND/profile.html',data)   
+    return render(request, "BACKEND/profile.html", data)
 
 
     
