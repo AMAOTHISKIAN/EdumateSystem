@@ -140,6 +140,7 @@ def HOD_HOME(request):
         'student_gender_female': student_gender_female,
         'total_fees': total_remaining_fees,
         'total_salary': total_remaining_salaries,
+        'request': request
         
     }
 
@@ -151,7 +152,8 @@ def Meeting(request):
     # Pylint(E1101:no-member)
     meeting = Meetings.objects.all()
     data = {
-        'meeting': meeting
+        'meeting': meeting,
+        'request': request
     }
     return render (request,'HOD/HOD_meetings.html',data)
 
@@ -219,7 +221,8 @@ def Teachers(request):
         salary = Employe.objects.get(employe = staff_id)
         data = {
             'staff':staff,
-            'salary':salary
+            'salary':salary,
+            'request': request
         }
         return render (request,'HOD/Teacher.html',data)
     else:
@@ -452,7 +455,8 @@ def Student_edit(request, id):
 def Student(request):
     students = student.objects.all()
     data = {
-        'students':students
+        'students':students,
+        'request': request
     }
     return render (request,'HOD/Students.html',data)
 
@@ -627,7 +631,8 @@ def HOD_HOME_fornt_edit(request, id):
 def  HOD_HOME_fornt(request):
      detail = Frontend.objects.all()
      data = {
-        'detail':detail
+        'detail':detail,
+        'request': request
      }
      return render(request,'HOD/front_end.html',data)
 
@@ -783,7 +788,8 @@ def  hod_leave_views(request):
     data = {
         'student_leave': student_leave,
         'staff_leave':staff_leave,
-        'teacher_leave':teacher_leave
+        'teacher_leave':teacher_leave,
+        'request': request
     }
     return render(request,'HOD/Hod_leave_views.html',data)
                            
@@ -845,7 +851,8 @@ def hod_feedback(request):
     data = {
         'staff_feedback':staff_feedback,
         'guest_feedback':guest_feedback,
-        'teacher_feedback':teacher_feedback
+        'teacher_feedback':teacher_feedback,
+        'request': request
     }
     return render(request,'HOD/hod_feedback.html',data)
 
@@ -949,7 +956,8 @@ def Events_edit(request ,id):
 def Time_Table(request):
     time = TimeTable.objects.all()
     data = {
-        'timetable':time
+        'timetable':time,
+        'request': request
     }
     return render(request,'HOD/time_table.html',data)
 
@@ -1000,7 +1008,8 @@ def Time_Table_add(request):
 def subjects(request):
     subject = Subject.objects.all()
     data = {
-        'subject':subject
+        'subject':subject,
+        'request': request
     }
     return render(request,'HOD/subject.html', data)
 
@@ -1046,7 +1055,8 @@ def save_subject(request):
 def sections(request):
     SECe = Section.objects.all()
     data = {
-        'section':SECe
+        'section':SECe,
+        'request': request
     }
     return render(request,'HOD/sections.html',data)
 
@@ -1168,7 +1178,8 @@ def AttendanceView(request):
        Attendance = AttendanceRecord.objects.all()
        
        data = {
-        'student':Attendance
+        'student':Attendance,
+        'request': request
        }
 
        return render(request,'HOD/view_attendance.html',data)
@@ -1396,7 +1407,7 @@ def fees(request):
     add_bus_riders_fees()
 
 
-    data = {'students': []}
+    data = {'students': [],'request': request}
     for student in students:
         fees = unpaid_fees.filter(student=student)
         total_amount = fees.aggregate(total_amount=Sum('amount'))['total_amount']
@@ -1477,7 +1488,7 @@ def hostel_(request):
         num_occupied_rooms=Count('rooms', filter=Q(rooms__status='occupied')),
         num_available_rooms=Count('rooms', filter=Q(rooms__status='available'))
     )
-    return render(request,'HOD/Hostel.html',{'hostels': hostels})
+    return render(request,'HOD/Hostel.html',{'hostels': hostels,'request': request})
 
 @login_required(login_url='login')    
 def hostel_add(request):
@@ -1599,7 +1610,8 @@ def hostel_R_H(request, id):
 def Transport(request):
     tran = vehicles.objects.all()
     data = {
-        'tra':tran
+        'tra':tran,
+        'request': request
     }
     return render(request,'HOD/transpotation.html',data)
 
@@ -1724,7 +1736,8 @@ def STAff(request):
         salary = Employe.objects.get(employe = staff_id)
         data = {
             'staff':staff,
-            'slary':salary
+            'slary':salary,
+            'request': request
         }
         return render (request,'HOD/Staff.html',data)
     else:
@@ -1952,7 +1965,7 @@ def salary(request):
     unpaid_salaries = Salarys.objects.filter(payed=False).order_by('employe__employe__username')
     add_monthly_salary_for_all_employees()
     employes = set(salary.employe for salary in unpaid_salaries)
-    data = {'employe': []}
+    data = {'employe': [],'request': request}
     for emp in employes:
         salaries = unpaid_salaries.filter(employe=emp)
         total_amount = salaries.aggregate(total_amount=Sum('amount'))['total_amount']
@@ -2022,7 +2035,8 @@ def salary_history(request):
 def Result_C(request):
     classsall = Class.objects.all()
     data = {
-        'class':classsall
+        'class':classsall,
+        'request': request
     }
     return render(request,'HOD/result.html',data)
 
@@ -2162,7 +2176,8 @@ def ResultAdd(request, id, sid, ied):
 def Hod_Blogs(request):
     blog = Blog.objects.all()
     data = {
-        'blogs':blog
+        'blogs':blog,
+        'request': request
     }
     return render(request , 'HOD/blogs_views.html',data)
 
@@ -2270,7 +2285,8 @@ def add_image(request):
         blog = Blog.objects.filter(author=request.user.id)
 
         context = {
-            'categories': blog
+            'categories': blog,
+            'request': request
         }
 
         return render(request, 'HOD/add_image__in.html', context)
@@ -2283,7 +2299,8 @@ def request_views(request):
     today = date.today()
     admission_requests = ParentHelp.objects.filter( admission_deadline__gte=today)
     data = {
-        'admission_requests': admission_requests
+        'admission_requests': admission_requests,
+        'request': request
     }
     return render(request, 'HOD/request_views.html', data)
 
@@ -2322,5 +2339,6 @@ def contact_views(request):
     context = {
         'contacts': contacts,
         'year': current_year,  # Replace with current year
+        'request': request
     }
     return render(request,'HOD/views_contact_froms.html',context)
